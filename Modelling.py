@@ -132,11 +132,11 @@ GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2']+
                                               wall['Surface']['Layer_4']+
                                               wall['Surface']['Layer_6'])
 
-GLW12 = 4 * σ * Tm**3 * Fwg * (wall_floor['Surface']['Layer_in']+
-                                              wall_lat['Surface']['Layer_in']+
-                                              wall_op['Surface']['Layer_in'])
+GLW12 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_1']+
+                                              wall['Surface']['Layer_3']+
+                                              wall['Surface']['Layer_5'])
 
-GLW2 = 4 * σ * Tm**3 * ε_gLW / (1 - ε_gLW) * wall_glass['Surface'][glass]
+GLW2 = 4 * σ * Tm**3 * ε_gLW / (1 - ε_gLW) * wall['Surface']['Layer_7']
 
 GLW = 1 / (1 / GLW1 + 1 / GLW12 + 1 / GLW2)
 
