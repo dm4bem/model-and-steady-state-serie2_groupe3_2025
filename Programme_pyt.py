@@ -71,23 +71,15 @@ glass = {'Conductivity': 1.4,               # W/(m·K)
          'Width': 0.04,                     # m
          'Surface': S_g}                   # m²
 
-wall_floor = pd.DataFrame.from_dict({'wall': 'floor', 'Layer_out': concrete_floor,
-                               'Layer_in': insulation_floor,},
-                              orient='index')
-wall_floor
 
-wall_lat = pd.DataFrame.from_dict({'wall': 'lat','Layer_out': concrete_lat,
-                               'Layer_in': insulation_lat,},
+wall = pd.DataFrame.from_dict({'Layer_1': concrete_floor,
+                               'Layer_2': insulation_floor,
+                               'Layer_3':concrete_lat,
+                               'Layer_4':insulation_lat,
+                               'Layer_5':concrete_op,
+                               'Layer_6':insulation_op,
+                               'Layer_7':glass},
                               orient='index')
-wall_lat
-
-wall_op = pd.DataFrame.from_dict({'wall': 'op','Layer_out': concrete_op,
-                               'Layer_in': insulation_op,},
-                              orient='index')
-wall_op
-
-wall_glass=pd.DataFrame.from_dict({'wall': 'glass','Layer_out':glass},orient = 'index')
-wall_glass
 
 
 
