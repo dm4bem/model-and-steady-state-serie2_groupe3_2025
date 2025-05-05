@@ -104,10 +104,8 @@ pd.DataFrame(G_cd, columns=['Conductance'])
 
 
 # convection
-Gw_floor = h * wall_floor['Surface']
-Gw_glass = h * wall_glass['Surface']
-Gw_lat =  h * wall_lat['Surface']
-Gw_op =  h * wall_op['Surface']
+Gw = h * wall['Surface'].iloc[0]     # wall
+Gg = h * wall['Surface'].iloc[2]     # glass
 
 
 # view factor wall-glass
