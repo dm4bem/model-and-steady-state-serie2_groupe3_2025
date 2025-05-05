@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import dm4bem
-import matrice_A.py
+from matrice_A.py import*
 
 ##Room
 L = 6               # m length of the rectangular room
@@ -182,20 +182,7 @@ nq = 12     # number of flow branches
 q = [f'q{i}' for i in range(12)]
 
 
-A = np.zeros([12, 8])       # n° of branches X n° of nodes
-A[0, 0] = 1                 # branch 0: -> node 0
-A[1, 0], A[1, 1] = -1, 1    # branch 1: node 0 -> node 1
-A[2, 1], A[2, 2] = -1, 1    # branch 2: node 1 -> node 2
-A[3, 2], A[3, 3] = -1, 1    # branch 3: node 2 -> node 3
-A[4, 3], A[4, 4] = -1, 1    # branch 4: node 3 -> node 4
-A[5, 4], A[5, 5] = -1, 1    # branch 5: node 4 -> node 5
-A[6, 4], A[6, 6] = -1, 1    # branch 6: node 4 -> node 6
-A[7, 5], A[7, 6] = -1, 1    # branch 7: node 5 -> node 6
-A[8, 7] = 1                 # branch 8: -> node 7
-A[9, 5], A[9, 7] = 1, -1    # branch 9: node 5 -> node 7
-A[10, 6] = 1                # branch 10: -> node 6
-A[11, 6] = 1                # branch 11: -> node 6
-
+A = Matrice()
 pd.DataFrame(A, index=q, columns=θ)
 
 
