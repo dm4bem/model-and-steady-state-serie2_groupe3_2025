@@ -6,13 +6,13 @@ import dm4bem
 import matrice_A.py
 
 ##Room
-l = 6               # m length of the rectangular room
-L=3.06              # m width of the rectangular room
+L = 6               # m length of the rectangular room
+l = 3.06              # m width of the rectangular room
 H=3                 # m heigh of the room
 w=0.28              # m Thickness of the wall 
 S_floor=l*L         # m² Surface of the floor
-S_w1=L*H            # m² Surface of the opposite wall
-S_w2=l*H            # m² Surface of the latteral walls
+S_w1=l*H            # m² Surface of the opposite wall
+S_w2=L*H            # m² Surface of the latteral walls
 
 
 ##Glass
