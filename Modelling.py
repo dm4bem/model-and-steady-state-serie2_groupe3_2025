@@ -2,9 +2,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-import dm4bem
-from matrice_A.py import*
-
 ##Room
 L = 6               # m length of the rectangular room
 l = 3.06              # m width of the rectangular room
@@ -21,6 +18,40 @@ l_g = 2.5             # m lenght of the glass
 H_g = 3               # m Heigh of the glass
 S_g = l_g*H_g         # m² Surface of the glass
 
+def Matrice():
+  A = np.zeros([29, 22])       # n° of branches X n° of nodes
+  A[0, 0] = 1                 # branch 0: -> node 0
+  A[1, 0], A[1, 1] = -1, 1    # branch 1: node 0 -> node 1
+  A[2, 1], A[2, 2] = -1, 1    # branch 2: node 1 -> node 2
+  A[3, 2], A[3, 3] = -1, 1    # branch 3: node 2 -> node 3
+  A[4, 3], A[4, 4] = -1, 1    # branch 4: node 3 -> node 4
+  A[5, 4], A[5, 5] = -1, 1    # branch 5: node 4 -> node 5
+  A[6, 4], A[6, 6] = -1, 1    # branch 6: node 4 -> node 6
+  A[7, 5], A[7, 6] = -1, 1    # branch 7: node 5 -> node 6
+  A[8, 7] = 1                 # branch 8: -> node 7
+  A[9, 5], A[9, 7] = 1, -1    # branch 9: node 5 -> node 7
+  A[10, 6] = 1                # branch 10: -> node 6
+  A[11, 6] = 1                # branch 11: -> node 6
+  A[12, 12] = 1               # branch 0': -> node 12
+  A[13, 13], A[13, 12] = 1, -1         # branch 1': node 12 -> node 13
+  A[14, 14], A[14, 13] = 1, -1         # branch 2': node 13 -> node 14
+  A[15, 15], A[15, 14] = 1, -1         # branch 3': node 14 -> node 15
+  A[16, 16], A[16, 15] = 1, -1         # branch 4': node 13 -> node 14
+  A[17, 17] = 1               # branch 0": -> node 17
+  A[18, 18], A[18, 17] = 1, -1         # branch 1": node 17 -> node 18
+  A[19, 19], A[19, 18] = 1, -1         # branch 2": node 18 -> node 19
+  A[20, 20], A[20, 19] = 1, -1         # branch 3": node 19 -> node 20
+  A[21, 21], A[21, 20] = 1, -1         # branch 4": node 18 -> node 19
+  A[22, 5], A[22, 16] = 1, -1         # branch 5': node 16 -> node 5
+  A[23, 5], A[23, 21] = 1, -1         # branch 5": node 21 -> node 5
+  A[24, 6], A[24, 16] = 1, -1         # branch 6': node 16 -> node 6
+  A[25, 6], A[25, 21] = 1, -1         # branch 6": node 21 -> node 6
+  A[26, 16], A[26, 4] = 1, -1         # branch 12: node 4 -> node 16
+  A[27, 21], A[27, 16] = 1, -1         # branch 12': node 16 -> node 21
+  A[28, 4], A[28, 21] = 1, -1         # branch 12": node 21 -> node 4
+  return A
+
+A=Matrice()
 
 """A partir d'ici je ne suis pas certain de ce que j'ai fait en particulier sur la définition des différentes couches"""
 
@@ -128,13 +159,9 @@ print(f'For (T/K - 273.15)°C = 20°C, 4σT³ = {4 * σ * T_int**3:.1f} W/(m²·
 # long wave radiation
 Tm = 20 + 273   # K, mean temp for radiative exchange
 
-GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2']+
-                                              wall['Surface']['Layer_4']+
-                                              wall['Surface']['Layer_6'])
+GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2']+wall['Surface']['Layer_4']+wall['Surface']['Layer_6'])
 
-GLW12 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_1']+
-                                              wall['Surface']['Layer_3']+
-                                              wall['Surface']['Layer_5'])
+GLW12 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_1'] + wall['Surface']['Layer_3'] + wall['Surface']['Layer_5'])
 
 GLW2 = 4 * σ * Tm**3 * ε_gLW / (1 - ε_gLW) * wall['Surface']['Layer_7']
 
@@ -157,7 +184,7 @@ Kp = 0
 
 
 # glass: convection outdoor & conduction
-Ggs = float(1 / (1 / Gg.loc['h', 'out'] + 1 / (2 * G_cd['Glass'])))
+Ggs = float(1 / (1 / Gg.loc['h', 'out'] + 1 / (2 * G_cd['Layer_7'])))
 
 C = wall['Density'] * wall['Specific heat'] * wall['Surface'] * wall['Width']
 pd.DataFrame(C, columns=['Capacity'])
@@ -168,18 +195,18 @@ C['Air'] = air['Density'] * air['Specific heat'] * Va
 pd.DataFrame(C, columns=['Capacity'])
 
 # temperature nodes
-θ = ['θ0', 'θ1', 'θ2', 'θ3', 'θ4', 'θ5', 'θ6', 'θ7']
+θ = ['θ0', 'θ1', 'θ2', 'θ3', 'θ4', 'θ5', 'θ6', 'θ7','θ8','θ9','θ10','θ11','θ12','θ13','θ14','θ15','θ16','θ17','θ18','θ19','θ20','θ21','θ22']
 
 # flow-rate branches
-q = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11']
+q = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11','q12','q13','q14','q15','q16','q17','q18','q19','q20','q21','q22','q23','q24','q25','q26','q27','q28','q29']
 
 # temperature nodes
-nθ = 8      # number of temperature nodes
-θ = [f'θ{i}' for i in range(8)]
+nθ =  22     # number of temperature nodes
+θ = [f'θ{i}' for i in range(nθ)]
 
 # flow-rate branches
-nq = 12     # number of flow branches
-q = [f'q{i}' for i in range(12)]
+nq = 29     # number of flow branches
+q = [f'q{i}' for i in range(nq)]
 
 
 A = Matrice()
