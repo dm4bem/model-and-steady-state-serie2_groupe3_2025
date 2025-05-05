@@ -21,6 +21,8 @@ H_g=3               # m Heigh of the glass
 S_g=l_g*H_g         # m² Surface of the glass
 
 
+"""A partir d'ici je ne suis pas certain de ce que j'ai fait en particulier sur la définition des différentes couches"""
+
 ##Materials
 air = {'Density': 1.2,                      # kg/m³
        'Specific heat': 1000}               # J/(kg·K)
