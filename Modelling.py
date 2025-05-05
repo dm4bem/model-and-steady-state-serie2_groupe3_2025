@@ -128,9 +128,9 @@ print(f'For (T/K - 273.15)°C = 20°C, 4σT³ = {4 * σ * T_int**3:.1f} W/(m²·
 # long wave radiation
 Tm = 20 + 273   # K, mean temp for radiative exchange
 
-GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall_floor['Surface']['Layer_in']+
-                                              wall_lat['Surface']['Layer_in']+
-                                              wall_op['Surface']['Layer_in'])
+GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2']+
+                                              wall['Surface']['Layer_4']+
+                                              wall['Surface']['Layer_6'])
 
 GLW12 = 4 * σ * Tm**3 * Fwg * (wall_floor['Surface']['Layer_in']+
                                               wall_lat['Surface']['Layer_in']+
