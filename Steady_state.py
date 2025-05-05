@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import dm4bem
 from IPython.display import display
 
 ##Room
@@ -294,6 +295,7 @@ TC = dm4bem.file2TC('./toy_model/TC.csv', name='', auto_number=False)
 #TC['G']['q11'] = 1e3  # Kp -> ∞, almost perfect controller
 #TC['G']['q11'] = 0      # Kp -> 0, no controller (free-floating)
 
+[As, Bs, Cs, Ds, us] = dm4bem.tc2ss(TC)
 
 
 
