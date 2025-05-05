@@ -80,6 +80,7 @@ wall = pd.DataFrame.from_dict({'Layer_1': concrete_floor,
                                'Layer_6':insulation_op,
                                'Layer_7':glass},
                               orient='index')
+wall
 
 
 
