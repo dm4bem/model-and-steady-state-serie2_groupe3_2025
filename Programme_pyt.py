@@ -99,20 +99,8 @@ h
 
 
 # conduction
-G_cd= ((wall_floor['Conductivity']['Layer_in'] / wall_floor['Width']['Layer_in']) + 
-       wall_floor['Conductivity']['Layer_out'] / wall_floor['Width']['Layer_out']* wall_floor['Surface'])
-
-G_cd+= (wall_glass['Conductivity'] / wall_glass['Width'] +
-        wall_glass['Conductivity'] / wall_glass['Width']) * wall_glass['Surface']
-
-G_cd+= (wall_lat['Conductivity'] / wall_lat['Width']+
-        wall_lat['Conductivity'] / wall_lat['Width']) * wall_lat['Surface']
-
-G_cd+= (wall_op['Conductivity'] / wall_op['Width']+
-        wall_op['Conductivity'] / wall_op['Width']) * wall_op['Surface']
-
+G_cd = wall['Conductivity'] / wall['Width'] * wall['Surface']
 pd.DataFrame(G_cd, columns=['Conductance'])
-
 
 
 # convection
