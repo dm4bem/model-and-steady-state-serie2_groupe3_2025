@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import dm4bem
+import matrice_A.py
 
 ##Room
 l = 6               # m length of the rectangular room
