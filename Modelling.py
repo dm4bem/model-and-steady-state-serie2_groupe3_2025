@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from IPython.display import display
+
 ##Room
 L = 6               # m length of the rectangular room
 l = 3.06              # m width of the rectangular room
@@ -136,8 +138,11 @@ pd.DataFrame(G_cd, columns=['Conductance'])
 
 
 # convection
-Gw = h * wall['Surface'].iloc[0]     # wall
-Gg = h * wall['Surface'].iloc[2]     # glass
+Gw1 = h * wall['Surface']['Layer_1']     # wall
+Gw2 = h * wall['Surface']['Layer_3']
+Gw3 = h * wall['Surface']['Layer_5']
+
+Gg = h * wall['Surface']['Layer_7']     # glass
 
 
 # view factor wall-glass
@@ -159,13 +164,19 @@ print(f'For (T/K - 273.15)°C = 20°C, 4σT³ = {4 * σ * T_int**3:.1f} W/(m²·
 # long wave radiation
 Tm = 20 + 273   # K, mean temp for radiative exchange
 
-GLW1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2']+wall['Surface']['Layer_4']+wall['Surface']['Layer_6'])
+GLW1_1 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_2'])
+GLW1_2 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_4'])
+GLW1_3 = 4 * σ * Tm**3 * ε_wLW / (1 - ε_wLW) * (wall['Surface']['Layer_6'])
 
-GLW12 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_1'] + wall['Surface']['Layer_3'] + wall['Surface']['Layer_5'])
+GLW12_1 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_1'])
+GLW12_2 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_3'])
+GLW12_3 = 4 * σ * Tm**3 * Fwg * (wall['Surface']['Layer_5'])
 
 GLW2 = 4 * σ * Tm**3 * ε_gLW / (1 - ε_gLW) * wall['Surface']['Layer_7']
 
-GLW = 1 / (1 / GLW1 + 1 / GLW12 + 1 / GLW2)
+GLW_1 = 1 / (1 / GLW1_1 + 1 / GLW12_1 + 1 / GLW2)
+GLW_2 = 1 / (1 / GLW1_2 + 1 / GLW12_2 + 1 / GLW2)
+GLW_3 = 1 / (1 / GLW1_3 + 1 / GLW12_3 + 1 / GLW2)
 
 # ventilation flow rate
 Va = l**3                   # m³, volume of air
@@ -213,16 +224,24 @@ A = Matrice()
 pd.DataFrame(A, index=q, columns=θ)
 
 
+
 G = np.array(np.hstack(
-    [Gw['out'],
-     2 * G_cd['Layer_out'], 2 * G_cd['Layer_out'],
-     2 * G_cd['Layer_in'], 2 * G_cd['Layer_in'],
-     GLW,
-     Gw['in'],
+    [Gw1['out'],
+     2 * G_cd['Layer_1'], 2 * G_cd['Layer_1'],
+     2 * G_cd['Layer_2'], 2 * G_cd['Layer_2'],
+     GLW_1,    
+     Gw1['in'],
      Gg['in'],
-     Ggs,
-     2 * G_cd['Glass'],
+     Ggs,                   
+     2 * G_cd['Layer_7'],   #q9
      Gv,
+     Kp
+     Gw['out'],
+     2 * G_cd['Layer_3'], 2 * G_cd['Layer_3'],
+     2 * G_cd['Layer_4'], 2 * G_cd['Layer_4'],
+     Gw['out'],
+     2 * G_cd['Layer_5'], 2 * G_cd['Layer_5'],
+     2 * G_cd['Layer_6'], 2 * G_cd['Layer_6'],
      Kp]))
 
 # np.set_printoptions(precision=3, threshold=16, suppress=True)
@@ -231,6 +250,7 @@ pd.DataFrame(G, index=q)
 
 
 neglect_air_glass = False
+print(C)
 
 if neglect_air_glass:
     C = np.array([0, C['Layer_out'], 0, C['Layer_in'], 0, 0,
