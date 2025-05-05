@@ -8,17 +8,18 @@ import matrice_A.py
 ##Room
 L = 6               # m length of the rectangular room
 l = 3.06              # m width of the rectangular room
-H=3                 # m heigh of the room
-w=0.28              # m Thickness of the wall 
-S_floor=l*L         # m² Surface of the floor
-S_w1=l*H            # m² Surface of the opposite wall
-S_w2=L*H            # m² Surface of the latteral walls
+H = 3                 # m heigh of the room
+w = 0.28              # m Thickness of the wall 
+S_floor = l*L         # m² Surface of the floor
+S_w1 = l*H            # m² Surface of the opposite wall
+S_w2 = L*H            # m² Surface of the latteral walls
+S_tot_w2 = 2*S_w2     # m² Total surface of the latteral walls
 
 
 ##Glass
-l_g=2.5             # m lenght of the glass
-H_g=3               # m Heigh of the glass
-S_g=l_g*H_g         # m² Surface of the glass
+l_g = 2.5             # m lenght of the glass
+H_g = 3               # m Heigh of the glass
+S_g = l_g*H_g         # m² Surface of the glass
 
 
 """A partir d'ici je ne suis pas certain de ce que j'ai fait en particulier sur la définition des différentes couches"""
