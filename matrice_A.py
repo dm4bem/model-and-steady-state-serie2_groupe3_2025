@@ -33,5 +33,5 @@ def Matrice()
   A[28, 4], A[28, 21] = 1, -1         # branch 12": node 21 -> node 4
   return A
 
-
+A=Matrice()
 print (A)
