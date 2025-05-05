@@ -21,7 +21,7 @@ H_g = 3               # m Heigh of the glass
 S_g = l_g*H_g         # m² Surface of the glass
 
 def Matrice():
-  A = np.zeros([29, 22])       # n° of branches X n° of nodes
+  A = np.zeros([26, 22])       # n° of branches X n° of nodes
   A[0, 0] = 1                 # branch 0: -> node 0
   A[1, 0], A[1, 1] = -1, 1    # branch 1: node 0 -> node 1
   A[2, 1], A[2, 2] = -1, 1    # branch 2: node 1 -> node 2
@@ -48,9 +48,6 @@ def Matrice():
   A[23, 5], A[23, 21] = 1, -1         # branch 5": node 21 -> node 5
   A[24, 6], A[24, 16] = 1, -1         # branch 6': node 16 -> node 6
   A[25, 6], A[25, 21] = 1, -1         # branch 6": node 21 -> node 6
-  A[26, 16], A[26, 4] = 1, -1         # branch 12: node 4 -> node 16
-  A[27, 21], A[27, 16] = 1, -1         # branch 12': node 16 -> node 21
-  A[28, 4], A[28, 21] = 1, -1         # branch 12": node 21 -> node 4
   return A
 
 A=Matrice()
@@ -134,6 +131,7 @@ h
 
 # conduction
 G_cd = wall['Conductivity'] / wall['Width'] * wall['Surface']
+G_cd['Layer_2']=0
 pd.DataFrame(G_cd, columns=['Conductance'])
 
 
@@ -209,14 +207,13 @@ pd.DataFrame(C, columns=['Capacity'])
 θ = ['θ0', 'θ1', 'θ2', 'θ3', 'θ4', 'θ5', 'θ6', 'θ7','θ8','θ9','θ10','θ11','θ12','θ13','θ14','θ15','θ16','θ17','θ18','θ19','θ20','θ21','θ22']
 
 # flow-rate branches
-q = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11','q12','q13','q14','q15','q16','q17','q18','q19','q20','q21','q22','q23','q24','q25','q26','q27','q28','q29']
-
+q = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11','q12','q13','q14','q15','q16','q17','q18','q19','q20','q21','q22','q23','q24','q25','q26']
 # temperature nodes
 nθ =  22     # number of temperature nodes
 θ = [f'θ{i}' for i in range(nθ)]
 
 # flow-rate branches
-nq = 29     # number of flow branches
+nq = 26     # number of flow branches
 q = [f'q{i}' for i in range(nq)]
 
 
@@ -235,14 +232,18 @@ G = np.array(np.hstack(
      Ggs,                   
      2 * G_cd['Layer_7'],   #q9
      Gv,
-     Kp
-     Gw['out'],
+     Kp,
+     Gw2['out'],
      2 * G_cd['Layer_3'], 2 * G_cd['Layer_3'],
      2 * G_cd['Layer_4'], 2 * G_cd['Layer_4'],
-     Gw['out'],
+     Gw3['out'],
      2 * G_cd['Layer_5'], 2 * G_cd['Layer_5'],
      2 * G_cd['Layer_6'], 2 * G_cd['Layer_6'],
-     Kp]))
+     GLW_2,
+     GLW_3,
+     Gw2['in'],
+     Gw3['in'],
+     ]))
 
 # np.set_printoptions(precision=3, threshold=16, suppress=True)
 # pd.set_option("display.precision", 1)
@@ -250,14 +251,13 @@ pd.DataFrame(G, index=q)
 
 
 neglect_air_glass = False
-print(C)
 
 if neglect_air_glass:
-    C = np.array([0, C['Layer_out'], 0, C['Layer_in'], 0, 0,
-                  0, 0])
+    C = np.array([0, C['Layer_1'], 0, C['Layer_2'], 0, 0,
+                  0, 0, 0, 0, 0, 0, 0, C['Layer_3'], 0, C['Layer_4'], 0, 0, C['Layer_5'], 0, C['Layer_6'], 0])
 else:
-    C = np.array([0, C['Layer_out'], 0, C['Layer_in'], 0, 0,
-                  C['Air'], C['Glass']])
+    C = np.array([0, C['Layer_1'], 0, C['Layer_2'], 0, C['Air'],
+                  C['Layer_7'], 0, 0, 0, 0, 0, 0, C['Layer_3'], 0, C['Layer_4'], 0, 0, C['Layer_5'], 0, C['Layer_6'], 0])
 
 # pd.set_option("display.precision", 3)
 pd.DataFrame(C, index=θ)
