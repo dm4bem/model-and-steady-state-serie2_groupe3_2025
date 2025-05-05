@@ -263,14 +263,14 @@ else:
 pd.DataFrame(C, index=θ)
 
 
-b = pd.Series(['To', 0, 0, 0, 0, 0, 0, 0, 'To', 0, 'To', 'Ti_sp'],
+b = pd.Series(['To', 0, 0, 0, 0, 0, 0, 0, 'To', 0, 'To', 'Ti_sp', 'To', 0, 0, 0, 0, 'To', 0, 0, 0, 0, 0, 0, 0, 0 ],
               index=q)
 
 
-f = pd.Series(['Φo', 0, 0, 0, 'Φi', 0, 'Qa', 'Φa'],
+f = pd.Series(['Φo', 0, 0, 0, 'Φi', 0, 'Qa', 'Φa', 0, 0, 0, 0, 'Φo', 0, 0, 0, 'Φi', 'Φo', 0, 0, 0, 'Φi'],
               index=θ)
 
-y = np.zeros(8)         # nodes
+y = np.zeros(22)         # nodes
 y[[6]] = 1              # nodes (temperatures) of interest
 pd.DataFrame(y, index=θ)
 
@@ -289,3 +289,11 @@ TC = {"A": A,
       "b": b,
       "f": f,
       "y": y}
+
+TC = dm4bem.file2TC('./toy_model/TC.csv', name='', auto_number=False)
+#TC['G']['q11'] = 1e3  # Kp -> ∞, almost perfect controller
+#TC['G']['q11'] = 0      # Kp -> 0, no controller (free-floating)
+
+
+
+
