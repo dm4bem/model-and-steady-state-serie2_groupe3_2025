@@ -292,15 +292,9 @@ TC = {"A": A,
       "y": y}
 
 
-controller = False
-neglect_air_glass_capacity = False
-imposed_time_step = False
-Δt = 498    # s, imposed time step
-
-
 TC = dm4bem.file2TC('TC.csv', name='', auto_number=False)
 #TC['G']['q11'] = 1e3  # Kp -> ∞, almost perfect controller
 TC['G']['q11'] = 0      # Kp -> 0, no controller (free-floating)
 
 [As, Bs, Cs, Ds, us] = dm4bem.tc2ss(TC)
-
+us
