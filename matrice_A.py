@@ -1,7 +1,8 @@
 import numpy as np
+import pandas as pd
 
 def Matrice():
-  A = np.zeros([29, 18])       # n° of branches X n° of nodes
+  A = np.zeros([26, 18])       # n° of branches X n° of nodes
   A[0, 0] = 1                 # branch 0: -> node 0
   A[1, 0], A[1, 1] = -1, 1    # branch 1: node 0 -> node 1
   A[2, 1], A[2, 2] = -1, 1    # branch 2: node 1 -> node 2
@@ -28,10 +29,6 @@ def Matrice():
   A[23, 5], A[23, 17] = 1, -1         # branch 5": node 21 -> node 5
   A[24, 6], A[24, 12] = 1, -1         # branch 6': node 16 -> node 6
   A[25, 6], A[25, 17] = 1, -1         # branch 6": node 21 -> node 6
-  A[26, 12], A[26, 4] = 1, -1         # branch 12: node 4 -> node 16
-  A[27, 17], A[27, 12] = 1, -1         # branch 12': node 16 -> node 21
-  A[28, 4], A[28, 17] = 1, -1         # branch 12": node 21 -> node 4
   return A
 
 A=Matrice()
-print(A)
