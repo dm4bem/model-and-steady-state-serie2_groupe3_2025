@@ -1,6 +1,6 @@
 import numpy as np
 
-def Matrice()
+def Matrice():
   A = np.zeros([29, 22])       # n° of branches X n° of nodes
   A[0, 0] = 1                 # branch 0: -> node 0
   A[1, 0], A[1, 1] = -1, 1    # branch 1: node 0 -> node 1
