@@ -6,7 +6,7 @@ import dm4bem
 from IPython.display import display
 
 from matrice_A.py import *
-from Steady_state.py import*
+from Modelling.py import*
 
 
 controller = False
