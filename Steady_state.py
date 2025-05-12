@@ -303,10 +303,4 @@ TC = dm4bem.file2TC('TC.csv', name='', auto_number=False)
 TC['G']['q11'] = 0      # Kp -> 0, no controller (free-floating)
 
 [As, Bs, Cs, Ds, us] = dm4bem.tc2ss(TC)
-print('Matrices and vectors for thermal circuit from Figure 1') 
-df = pd.read_csv('TC_0.csv')
-df.style.apply(lambda x: ['background-color: yellow'
-                          if x.name in df.index[-3:] or c in df.columns[-2:]
-                          else '' for c in df.columns], axis=1)
-
 
