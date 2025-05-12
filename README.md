@@ -2,4 +2,4 @@
 
 Group members names: Corentin BLANCHEDEAU, Nicolas DEVAUX, Guillaume GONZALEZ-PLASSOT, Valentin TANGRE
 
-Our Binder link: https://hub.2i2c.mybinder.org/user/dm4bem-model-an-e2_groupe3_2025-ztj5t13z/lab
+Our Binder link: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dm4bem/model-and-steady-state-serie2_groupe3_2025/HEAD)
