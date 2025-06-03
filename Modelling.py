@@ -69,9 +69,9 @@ insulation_op = {'Conductivity': 0.036,     # W/(m·K)
               'Surface': S_w1}              # m²
 
 
-glass = {'Conductivity': 1.4,               # W/(m·K)
+glass = {'Conductivity': 1.050,               # W/(m·K)
          'Density': 2500,                   # kg/m³
-         'Specific heat': 1210,             # J/(kg⋅K)
+         'Specific heat': 840,             # J/(kg⋅K)
          'Width': 0.04,                     # m
          'Surface': S_g}                   # m²
 
