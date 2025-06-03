@@ -25,7 +25,7 @@ S_g = l_g*H_g         # m² Surface of the glass
 
 A=Matrice()
 
-"""A partir d'ici je ne suis pas certain de ce que j'ai fait en particulier sur la définition des différentes couches"""
+
 
 ##Materials
 air = {'Density': 1.2,                      # kg/m³
